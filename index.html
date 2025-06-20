@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Feedback Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #EDF6F9;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, dodgerblue 0%, midnightblue 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-body {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #f0f2f5;
+            border-radius: 12px;
+            background: #fafbfc;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .likert-container {
+            margin-bottom: 25px;
+        }
+
+        .likert-question {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .likert-scale {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .likert-option {
+            text-align: center;
+            padding: 15px 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .likert-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .likert-option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .likert-option input[type="radio"] {
+            display: none;
+        }
+
+        .likert-labels {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .signature-canvas {
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            cursor: crosshair;
+            background: white;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .signature-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-clear {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-confirm {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .likert-scale {
+                grid-template-columns: 1fr;
+            }
+
+            .likert-labels {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .form-header h1 {
+                font-size: 2rem;
+            }
+
+            .signature-canvas {
+                width: 100%;
+                height: 150px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>Evaluation Form</h1>
+            <p>Help us improve our training programs with your valuable feedback</p>
+        </div>
+
+        <div class="form-body">
+            <form id="feedbackForm">
+                <!-- Section 1: Essential Insights -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📘</span>
+                        Essential Insights
+                    </h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="trainingTopic">Training Topic <span class="required">*</span></label>
+                            <select id="trainingTopic" name="trainingTopic" required>
+                                <option value="">Select Training Topic</option>
+                                <option value="leadership">Leadership Development</option>
+                                <option value="communication">Communication Skills</option>
+                                <option value="project-management">Project Management</option>
+                                <option value="technical-skills">Technical Skills</option>
+                                <option value="safety">Safety Training</option>
+                                <option value="customer-service">Customer Service</option>
+                                <option value="team-building">Team Building</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error" id="trainingTopicError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trainingHours">Training Hours <span class="required">*</span></label>
+                            <input type="text" id="trainingHours" name="trainingHours" placeholder="e.g., 8 hours" required>
+                            <div class="error" id="trainingHoursError"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="trainerName">Trainer Name <span class="required">*</span></label>
+                            <select id="trainerName" name="trainerName" required>
+                                <option value="">Select Trainer</option>
+                                <option value="john-smith">John Smith</option>
+                                <option value="sarah-johnson">Sarah Johnson</option>
+                                <option value="mike-davis">Mike Davis</option>
+                                <option value="emily-brown">Emily Brown</option>
+                                <option value="david-wilson">David Wilson</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error" id="trainerNameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trainingDate">Date <span class="required">*</span></label>
+                            <input type="date" id="trainingDate" name="trainingDate" required>
+                            <div class="error" id="trainingDateError"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="venue">Venue <span class="required">*</span></label>
+                        <input type="text" id="venue" name="venue" placeholder="Training venue location" required>
+                        <div class="error" id="venueError"></div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Personal Details -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🙋‍♂️</span>
+                        Personal Details
+                    </h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="participantName">Name <span class="required">*</span></label>
+                            <input type="text" id="participantName" name="participantName" placeholder="Your full name" required>
+                            <div class="error" id="participantNameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ste">STE <span class="required">*</span></label>
+                            <input type="text" id="ste" name="ste" placeholder="STE information" required>
+                            <div class="error" id="steError"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Evaluation -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📊</span>
+                        Evaluation
+                    </h2>
+                    
+                    <div class="likert-container">
+                        <div class="likert-question">How satisfied are you with the overall training experience?</div>
+                        <div class="likert-scale">
+                            <label class="likert-option">
+                                <input type="radio" name="q1" value="1">
+                                <span>1</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q1" value="2">
+                                <span>2</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q1" value="3">
+                                <span>3</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q1" value="4">
+                                <span>4</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q1" value="5">
+                                <span>5</span>
+                            </label>
+                        </div>
+                        <div class="likert-labels">
+                            <span>Very Dissatisfied</span>
+                            <span>Dissatisfied</span>
+                            <span>Neutral</span>
+                            <span>Satisfied</span>
+                            <span>Very Satisfied</span>
+                        </div>
+                    </div>
+
+                    <div class="likert-container">
+                        <div class="likert-question">Was the training duration appropriate for covering the topics?</div>
+                        <div class="likert-scale">
+                            <label class="likert-option">
+                                <input type="radio" name="q2" value="1">
+                                <span>1</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q2" value="2">
+                                <span>2</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q2" value="3">
+                                <span>3</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q2" value="4">
+                                <span>4</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q2" value="5">
+                                <span>5</span>
+                            </label>
+                        </div>
+                        <div class="likert-labels">
+                            <span>Very Dissatisfied</span>
+                            <span>Dissatisfied</span>
+                            <span>Neutral</span>
+                            <span>Satisfied</span>
+                            <span>Very Satisfied</span>
+                        </div>
+                    </div>
+
+                    <div class="likert-container">
+                        <div class="likert-question">Was the training content relevant to your job responsibilities?</div>
+                        <div class="likert-scale">
+                            <label class="likert-option">
+                                <input type="radio" name="q3" value="1">
+                                <span>1</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q3" value="2">
+                                <span>2</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q3" value="3">
+                                <span>3</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q3" value="4">
+                                <span>4</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q3" value="5">
+                                <span>5</span>
+                            </label>
+                        </div>
+                        <div class="likert-labels">
+                            <span>Very Dissatisfied</span>
+                            <span>Dissatisfied</span>
+                            <span>Neutral</span>
+                            <span>Satisfied</span>
+                            <span>Very Satisfied</span>
+                        </div>
+                    </div>
+
+                    <div class="likert-container">
+                        <div class="likert-question">How clear and understandable was the information presented during the training?</div>
+                        <div class="likert-scale">
+                            <label class="likert-option">
+                                <input type="radio" name="q4" value="1">
+                                <span>1</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q4" value="2">
+                                <span>2</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q4" value="3">
+                                <span>3</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q4" value="4">
+                                <span>4</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q4" value="5">
+                                <span>5</span>
+                            </label>
+                        </div>
+                        <div class="likert-labels">
+                            <span>Very Dissatisfied</span>
+                            <span>Dissatisfied</span>
+                            <span>Neutral</span>
+                            <span>Satisfied</span>
+                            <span>Very Satisfied</span>
+                        </div>
+                    </div>
+
+                    <div class="likert-container">
+                        <div class="likert-question">How effective was the instructor in delivering the training?</div>
+                        <div class="likert-scale">
+                            <label class="likert-option">
+                                <input type="radio" name="q5" value="1">
+                                <span>1</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q5" value="2">
+                                <span>2</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q5" value="3">
+                                <span>3</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q5" value="4">
+                                <span>4</span>
+                            </label>
+                            <label class="likert-option">
+                                <input type="radio" name="q5" value="5">
+                                <span>5</span>
+                            </label>
+                        </div>
+                        <div class="likert-labels">
+                            <span>Very Dissatisfied</span>
+                            <span>Dissatisfied</span>
+                            <span>Neutral</span>
+                            <span>Satisfied</span>
+                            <span>Very Satisfied</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Feedback -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">💬</span>
+                        Feedback
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label>Have you attended this training before?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="attendedBefore" value="yes">
+                                <span>Yes</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="attendedBefore" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Would you recommend this training to others?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="recommend" value="yes">
+                                <span>Yes</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="recommend" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Were the learning objectives clearly defined and achieved?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="objectivesAchieved" value="yes">
+                                <span>Yes</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="objectivesAchieved" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Your Suggestion -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📝</span>
+                        Your Suggestion
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="comments">Any Comments/Recommendations?</label>
+                        <textarea id="comments" name="comments" placeholder="Please share your suggestions, comments, or recommendations for improving the training..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 6: Signature -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">✍️</span>
+                        Digital Signature
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label>Please provide your digital signature:</label>
+                        <canvas id="signatureCanvas" class="signature-canvas" width="600" height="200"></canvas>
+                        <div class="signature-buttons">
+                            <button type="button" id="clearBtn" class="btn btn-clear">Clear</button>
+                            <button type="button" id="confirmBtn" class="btn btn-confirm hidden">Confirm</button>
+                            <button type="button" id="resetBtn" class="btn btn-reset hidden">Reset</button>
+                        </div>
+                        <div class="error" id="signatureError"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-submit">Submit Evaluation</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form validation and handling
+        class FeedbackForm {
+            constructor() {
+                this.form = document.getElementById('feedbackForm');
+                this.canvas = document.getElementById('signatureCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.isDrawing = false;
+                this.hasSignature = false;
+                this.signatureData = null;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupSignatureCanvas();
+                this.setupEventListeners();
+                this.setupLikertScale();
+            }
+
+            setupSignatureCanvas() {
+                // Set canvas size based on container
+                const rect = this.canvas.getBoundingClientRect();
+                this.canvas.width = 600;
+                this.canvas.height = 200;
+                
+                this.ctx.strokeStyle = '#2c3e50';
+                this.ctx.lineWidth = 2;
+                this.ctx.lineCap = 'round';
+                this.ctx.lineJoin = 'round';
+
+                // Mouse events
+                this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
+                this.canvas.addEventListener('mousemove', (e) => this.draw(e));
+                this.canvas.addEventListener('mouseup', () => this.stopDrawing());
+                this.canvas.addEventListener('mouseout', () => this.stopDrawing());
+
+                // Touch events for mobile
+                this.canvas.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousedown', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    this.canvas.dispatchEvent(mouseEvent);
+                });
+
+                this.canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousemove', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    this.canvas.dispatchEvent(mouseEvent);
+                });
+
+                this.canvas.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    const mouseEvent = new MouseEvent('mouseup', {});
+                    this.canvas.dispatchEvent(mouseEvent);
+                });
+            }
+
+            startDrawing(e) {
+                this.isDrawing = true;
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y);
+            }
+
+            draw(e) {
+                if (!this.isDrawing) return;
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.ctx.lineTo(x, y);
+                this.ctx.stroke();
+                
+                this.hasSignature = true;
+                this.showConfirmButton();
+            }
+
+            stopDrawing() {
+                if (this.isDrawing) {
+                    this.isDrawing = false;
+                    this.ctx.beginPath();
+                }
+            }
+
+            showConfirmButton() {
+                document.getElementById('confirmBtn').classList.remove('hidden');
+            }
+
+            clearSignature() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.hasSignature = false;
+                this.signatureData = null;
+                document.getElementById('confirmBtn').classList.add('hidden');
+                document.getElementById('resetBtn').classList.add('hidden');
+                document.getElementById('clearBtn').classList.remove('hidden');
+            }
+
+            confirmSignature() {
+                if (this.hasSignature) {
+                    this.signatureData = this.canvas.toDataURL();
+                    document.getElementById('confirmBtn').classList.add('hidden');
+                    document.getElementById('clearBtn').classList.add('hidden');
+                    document.getElementById('resetBtn').classList.remove('hidden');
+                }
+            }
+
+            resetSignature() {
+                this.clearSignature();
+            }
+
+            setupEventListeners() {
+                // Signature buttons
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearSignature());
+                document.getElementById('confirmBtn').addEventListener('click', () => this.confirmSignature());
+                document.getElementById('resetBtn').addEventListener('click', () => this.resetSignature());
+
+                // Form submission
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+                // Real-time validation
+                const inputs = this.form.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                    input.addEventListener('input', () => this.clearError(input));
+                });
+            }
+
+            setupLikertScale() {
+                // Handle Likert scale selection
+                const likertOptions = document.querySelectorAll('.likert-option');
+                likertOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const radio = option.querySelector('input[type="radio"]');
+                        radio.checked = true;
+                        
+                        // Remove selected class from siblings
+                        const siblings = option.parentElement.querySelectorAll('.likert-option');
+                        siblings.forEach(sibling => sibling.classList.remove('selected'));
+                        
+                        // Add selected class to current option
+                        option.classList.add('selected');
+                    });
+                });
+            }
+
+            validateField(field) {
+                const value = field.value.trim();
+                const errorElement = document.getElementById(field.id + 'Error');
+                
+                if (field.hasAttribute('required') && !value) {
+                    this.showError(errorElement, 'This field is required');
+                    return false;
+                }
+
+                // Specific validations
+                if (field.id === 'participantName' && value && value.length < 2) {
+                    this.showError(errorElement, 'Name must be at least 2 characters');
+                    return false;
+                }
+
+                if (field.id === 'trainingHours' && value && !/^\d+(\.\d+)?\s*(hours?|hrs?|h)?$/i.test(value)) {
+                    this.showError(errorElement, 'Please enter valid training hours (e.g., "8 hours" or "4.5")');
+                    return false;
+                }
+
+                this.clearError(field);
+                return true;
+            }
+
+            showError(errorElement, message) {
+                if (errorElement) {
+                    errorElement.textContent = message;
+                }
+            }
+
+            clearError(field) {
+                const errorElement = document.getElementById(field.id + 'Error');
+                if (errorElement) {
+                    errorElement.textContent = '';
+                }
+            }
+
+            validateForm() {
+                let isValid = true;
+                
+                // Validate required fields
+                const requiredFields = this.form.querySelectorAll('[required]');
+                requiredFields.forEach(field => {
+                    if (!this.validateField(field)) {
+                        isValid = false;
+                    }
+                });
+
+                // Validate Likert scale questions (at least one should be answered)
+                const likertQuestions = ['q1', 'q2', 'q3', 'q4', 'q5'];
+                let hasLikertAnswers = false;
+                
+                likertQuestions.forEach(question => {
+                    const radios = this.form.querySelectorAll(`input[name="${question}"]`);
+                    const isAnswered = Array.from(radios).some(radio => radio.checked);
+                    if (isAnswered) {
+                        hasLikertAnswers = true;
+                    }
+                });
+
+                if (!hasLikertAnswers) {
+                    alert('Please answer at least one evaluation question.');
+                    isValid = false;
+                }
+
+                // Validate Yes/No questions (at least one should be answered)
+                const yesNoQuestions = ['attendedBefore', 'recommend', 'objectivesAchieved'];
+                let hasYesNoAnswers = false;
+                
+                yesNoQuestions.forEach(question => {
+                    const radios = this.form.querySelectorAll(`input[name="${question}"]`);
+                    const isAnswered = Array.from(radios).some(radio => radio.checked);
+                    if (isAnswered) {
+                        hasYesNoAnswers = true;
+                    }
+                });
+
+                if (!hasYesNoAnswers) {
+                    alert('Please answer at least one feedback question.');
+                    isValid = false;
+                }
+
+                // Validate signature
+                if (!this.signatureData) {
+                    const signatureError = document.getElementById('signatureError');
+                    this.showError(signatureError, 'Please provide your digital signature');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            collectFormData() {
+                const formData = new FormData(this.form);
+                const data = {};
+                
+                // Basic form fields
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+
+                // Likert scale responses
+                const likertQuestions = ['q1', 'q2', 'q3', 'q4', 'q5'];
+                const likertLabels = [
+                    'Overall training satisfaction',
+                    'Training duration appropriateness',
+                    'Content relevance to job',
+                    'Information clarity',
+                    'Instructor effectiveness'
+                ];
+
+                data.evaluation = {};
+                likertQuestions.forEach((question, index) => {
+                    const selectedRadio = this.form.querySelector(`input[name="${question}"]:checked`);
+                    if (selectedRadio) {
+                        data.evaluation[likertLabels[index]] = {
+                            score: parseInt(selectedRadio.value),
+                            label: this.getLikertLabel(selectedRadio.value)
+                        };
+                    }
+                });
+
+                // Signature data
+                data.signature = this.signatureData;
+
+                return data;
+            }
+
+            getLikertLabel(value) {
+                const labels = {
+                    '1': 'Very Dissatisfied',
+                    '2': 'Dissatisfied',
+                    '3': 'Neutral',
+                    '4': 'Satisfied',
+                    '5': 'Very Satisfied'
+                };
+                return labels[value] || '';
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+                
+                if (this.validateForm()) {
+                    const formData = this.collectFormData();
+                    
+                    // Here you would typically send the data to your server
+                    console.log('Form Data:', formData);
+                    
+                    // Show success message
+                    alert('Thank you for your feedback! Your evaluation has been submitted successfully.');
+                    
+                    // Optional: Reset form
+                    // this.resetForm();
+                }
+            }
+
+            resetForm() {
+                this.form.reset();
+                this.clearSignature();
+                
+                // Clear Likert selections
+                const likertOptions = document.querySelectorAll('.likert-option');
+                likertOptions.forEach(option => option.classList.remove('selected'));
+                
+                // Clear error messages
+                const errorElements = document.querySelectorAll('.error');
+                errorElements.forEach(element => element.textContent = '');
+            }
+        }
+
+        // Initialize the form when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new FeedbackForm();
+        });
+
+        // Smooth scrolling for better UX
+        function smoothScrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Add some interactive enhancements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add hover effects to sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.addEventListener('mouseenter', () => {
+                    section.style.transform = 'translateY(-2px)';
+                });
+                
+                section.addEventListener('mouseleave', () => {
+                    section.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add focus indicators for better accessibility
+            const focusableElements = document.querySelectorAll('input, select, textarea, button');
+            focusableElements.forEach(element => {
+                element.addEventListener('focus', () => {
+                    element.style.outline = '2px solid #667eea';
+                    element.style.outlineOffset = '2px';
+                });
+                
+                element.addEventListener('blur', () => {
+                    element.style.outline = 'none';
+                });
+            });
+
+            // Set today's date as max date for training date field
+            const dateInput = document.getElementById('trainingDate');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('max', today);
+        });
+    </script>
+</body>
+</html>
